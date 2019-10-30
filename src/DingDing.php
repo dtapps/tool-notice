@@ -21,14 +21,6 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 */
 
-/**
- * Created by : PhpStorm
- * Date: 2019/8/27
- * Time: 23:11
- * User: 李光春
- * Twitter: @GC19980202
- */
-
 namespace liguangchun\notice;
 
 class DingDing

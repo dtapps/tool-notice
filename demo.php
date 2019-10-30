@@ -20,17 +20,29 @@
                    `=---='
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 */
-/**
- * Created by : PhpStorm
- * Date: 2019/10/26
- * Time: 22:53
- * User: 李光春
- */
 
 require_once './vendor/autoload.php';
 
 $qywx = new \liguangchun\notice\QyWeixin();
 $ding = new \liguangchun\notice\DingDing();
+$wt = new \liguangchun\notice\Worktile();
+$bc = new \liguangchun\notice\BearyChat();
+
+// 倍洽
+$bc->setConfig([
+    'key' => 'xxxxxxxxxxxxxxxxxxxx'
+]);
+$res = $bc->text('测试测试');
+if (empty($res)) var_dump($bc->getError());
+var_dump($res);
+
+// Worktile
+$wt->setConfig([
+    'key' => 'xxxxxxxxxxxxxxxxxxxx'
+]);
+$res = $wt->text(13553695467, '测试测试');
+if (empty($res)) var_dump($wt->getError());
+var_dump($res);
 
 // 钉钉机器人
 $ding->setConfig([

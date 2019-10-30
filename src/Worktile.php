@@ -23,40 +23,25 @@
 
 namespace liguangchun\notice;
 
-class QyWeixin
+class Worktile
 {
     /**
-     * 企业微信自定义机器人接口链接
+     * Worktile自定义机器人接口链接
      * @var string
      */
+    protected $url = 'https://hook.worktile.com/custombot/';
 
-    protected $url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=';
     /**
-     * 企业微信自定义机器人接口链接
+     * Worktile自定义机器人接口链接
      * @var string
      */
     protected $webhook = '';
-
-    /**
-     * 消息类型
-     * @var string
-     */
-    protected $msgType = 'text';
 
     /**
      * 错误信息
      * @var string
      */
     protected $error = '';
-
-    /**
-     * 初始化
-     * @return $this
-     */
-    public function init()
-    {
-        return $this;
-    }
 
     /**
      * 设置配置
@@ -71,16 +56,15 @@ class QyWeixin
 
     /**
      * 发送文本消息
+     * @param string $user 发送对象
      * @param string $content 消息内容
-     * @return bool    发送结果
+     * @return bool 发送结果
      */
-    public function text(string $content = '')
+    public function text(string $user, string $content = '')
     {
-        $this->msgType = 'text';
         $data = [
-            'text' => [
-                'content' => $content,
-            ],
+            'user' => $user,
+            'text' => $content
         ];
         return $this->sendMsg($data);
     }
@@ -92,12 +76,10 @@ class QyWeixin
      */
     public function sendMsg(array $data)
     {
-        if (empty($data['msgtype'])) $data['msgtype'] = $this->msgType;
-        $this->init();
         $res = $this->request($data);
         $result = json_decode($res, true);
-        if ($result['errcode'] !== 0) {
-            $this->error = $result['errmsg'];
+        if ($result['code'] !== 200) {
+            $this->error = $result['message'];
             return false;
         }
         return true;

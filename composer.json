@@ -1,16 +1,16 @@
 {
   "name": "liguangchun/notice",
-  "description": "Notice Plugin",
+  "description": "Notice Plugin for PHP",
   "type": "library",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "李光春",
-      "email": "gc@dtapp.net"
+      "email": "gc@dtapp.net",
+      "homepage": "https://api.dtapp.net"
     }
   ],
   "homepage": "https://www.dtapp.net",
-  "minimum-stability": "dev",
   "require": {
     "php": ">=7.0"
   },

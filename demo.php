@@ -27,6 +27,22 @@ $qywx = new \liguangchun\notice\QyWeixin();
 $ding = new \liguangchun\notice\DingDing();
 $wt = new \liguangchun\notice\Worktile();
 $bc = new \liguangchun\notice\BearyChat();
+$sc = new \liguangchun\notice\SendCloud();
+
+// 邮箱推送
+$sc->setConfig([
+    'api_user' => 'apiUser',
+    'api_key' => 'apiKey',
+    'from' => '发件人邮箱',
+    'from_name' => '发件人名称',
+    'notice' => '模板名称'
+]);
+$res = $sc->send('邮箱地址', '邮箱标题', '邮箱描述', [
+    "%name%" => ["name对应值"],
+    "%content%" => ["content对应值"],
+    "%sitename%" => ["sitename对应值"],
+]);
+if (empty($res)) var_dump($wt->getError());
 
 // 倍洽
 $bc->setConfig([
@@ -40,7 +56,7 @@ var_dump($res);
 $wt->setConfig([
     'key' => 'xxxxxxxxxxxxxxxxxxxx'
 ]);
-$res = $wt->text(13553695467, '测试测试');
+$res = $wt->text(10086, '测试测试');
 if (empty($res)) var_dump($wt->getError());
 var_dump($res);
 

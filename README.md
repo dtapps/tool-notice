@@ -26,7 +26,7 @@ composer search liguangchun/notice
 - 企业微信
 - Worktile
 - 倍洽
-- 邮箱(开发中)
+- 邮箱
 
 ## 使用
 
@@ -112,6 +112,35 @@ class Index
         ]);
         // 发送文本消息
         $res = $wt->text('10086',测试测试');
+        // 判断是否失败
+        if (empty($res)) var_dump($wt->getError());
+    }
+}
+```
+### 邮箱推送
+```
+use liguangchun\notice\SendCloud;
+
+class Index
+{
+    public function index()
+    {
+        // 实例化
+        $sc = new SendCloud();
+        // 配置通知地址
+        $sc->setConfig([
+            'api_user' => 'apiUser',
+            'api_key' => 'apiKey',
+            'from' => '发件人邮箱',
+            'from_name' => '发件人名称',
+            'notice' => '模板名称'
+        ]);
+        // 发送文本消息
+        $res = $sc->send('邮箱地址', '邮箱标题', '邮箱描述',  [
+            "%name%" => ["name对应值"],
+            "%content%" => ["content对应值"],
+            "%sitename%" => ["sitename对应值"],
+         ]);
         // 判断是否失败
         if (empty($res)) var_dump($wt->getError());
     }

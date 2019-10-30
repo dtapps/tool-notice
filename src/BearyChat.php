@@ -61,10 +61,9 @@ class BearyChat
      */
     public function text(string $content = '')
     {
-        $data = [
+        return $this->sendMsg([
             'text' => $content
-        ];
-        return $this->sendMsg($data);
+        ]);
     }
 
     /**
@@ -74,13 +73,11 @@ class BearyChat
      */
     public function sendMsg(array $data)
     {
-        $res = $this->request($data);
-        $result = json_decode($res, true);
-        if ($result['code'] !== 0) {
-            $this->error = $result['result'];
-            return false;
-        }
-        return true;
+        $result = json_decode($this->request($data), true);
+        if ($result['code'] !== 0) return true;
+        $this->error = $result['result'];
+        return false;
+
     }
 
     /**

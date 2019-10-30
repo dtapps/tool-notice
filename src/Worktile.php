@@ -26,13 +26,13 @@ namespace liguangchun\notice;
 class Worktile
 {
     /**
-     * Worktile自定义机器人接口链接
+     * WorkTile自定义机器人接口链接
      * @var string
      */
     protected $url = 'https://hook.worktile.com/custombot/';
 
     /**
-     * Worktile自定义机器人接口链接
+     * WorkTile自定义机器人接口链接
      * @var string
      */
     protected $webhook = '';
@@ -62,11 +62,10 @@ class Worktile
      */
     public function text(string $user, string $content = '')
     {
-        $data = [
+        return $this->sendMsg([
             'user' => $user,
             'text' => $content
-        ];
-        return $this->sendMsg($data);
+        ]);
     }
 
     /**
@@ -76,13 +75,10 @@ class Worktile
      */
     public function sendMsg(array $data)
     {
-        $res = $this->request($data);
-        $result = json_decode($res, true);
-        if ($result['code'] !== 200) {
-            $this->error = $result['message'];
-            return false;
-        }
-        return true;
+        $result = json_decode($this->request($data), true);
+        if ($result['code'] == 200) return true;
+        $this->error = $result['message'];
+        return false;
     }
 
     /**

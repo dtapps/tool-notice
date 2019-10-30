@@ -91,42 +91,46 @@ class SendCloud
      */
     public function send(string $email, string $title, string $desc, array $content)
     {
-        $res = $this->send_mail($email, $title, $content, $desc);
-        $result = json_decode($res, true);
-        if ($result['result'] !== true) {
-            $this->error = $result['message'];
-            $this->error = $result['statusCode'];
-            return false;
-        }
-        return true;
+        $result = json_decode($this->send_mail($email, $title, $content, $desc), true);
+        if ($result['result'] == true) return true;
+        $this->error = $result['message'];
+        $this->error = $result['statusCode'];
+        return false;
     }
 
     /**
-     * @param $to
-     * @param $subject
-     * @param $xsmtpapi
-     * @param $content_summary
+     * 获取错误信息
+     * @return mixed
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * 发送请求
+     * @param string $to 地址列表
+     * @param string $subject 邮件标题
+     * @param string $xsmtpapi SMTP 扩展字段
+     * @param string $content_summary 邮件摘要
      * @return false|string
      */
-    private function send_mail($to, $subject, $xsmtpapi, $content_summary)
+    private function send_mail(string $to, string $subject, string $xsmtpapi, string $content_summary)
     {
-        //您需要登录SendCloud创建API_USER，使用API_USER和API_KEY才可以进行邮件的发送。
-        $param = [
-            'apiUser' => $this->api_user, // API_USER
-            'apiKey' => $this->api_key, // API_KEY
-            'from' => $this->from, // 发件人地址
-            'fromName' => $this->from_name, // 发件人名称
-            'to' => $to, // 地址列表
-            'subject' => $subject, // 邮件标题
-            'templateInvokeName' => $this->template,// 邮件模板调用名称
-            'contentSummary' => $content_summary, // 邮件摘要
+        $data = http_build_query([
+            'apiUser' => $this->api_user,
+            'apiKey' => $this->api_key,
+            'from' => $this->from,
+            'fromName' => $this->from_name,
+            'to' => $to,
+            'subject' => $subject,
+            'templateInvokeName' => $this->template,
+            'contentSummary' => $content_summary,
             'xsmtpapi' => json_encode([
                 'to' => [$to],
                 'sub' => $xsmtpapi
-            ])// SMTP 扩展字段
-        ];
-        $data = http_build_query($param);
-        var_dump($data);
+            ])
+        ]);
         $options = array(
             'http' => array(
                 'method' => 'POST',
@@ -135,7 +139,6 @@ class SendCloud
             ));
         $context = stream_context_create($options);
         $result = file_get_contents($this->url, false, $context);
-
         return $result;
     }
 }

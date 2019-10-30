@@ -77,12 +77,11 @@ class DingDing
     public function text(string $content = '')
     {
         $this->msgType = 'text';
-        $data = [
+        return $this->sendMsg([
             'text' => [
                 'content' => $content,
             ],
-        ];
-        return $this->sendMsg($data);
+        ]);
     }
 
     /**
@@ -94,13 +93,11 @@ class DingDing
     {
         if (empty($data['msgtype'])) $data['msgtype'] = $this->msgType;
         $this->init();
-        $res = $this->request($data);
-        $result = json_decode($res, true);
-        if ($result['errcode'] !== 0) {
-            $this->error = $result['errmsg'];
-            return false;
-        }
-        return true;
+        $result = json_decode($this->request($data), true);
+        if ($result['errcode'] == 0) return true;
+        $this->error = $result['errmsg'];
+        return false;
+
     }
 
     /**

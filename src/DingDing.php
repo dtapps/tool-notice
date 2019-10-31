@@ -29,12 +29,6 @@ class DingDing
      * 钉钉自定义机器人接口链接
      * @var string
      */
-    protected $url = 'https://oapi.dingtalk.com/robot/send?access_token=';
-
-    /**
-     * 钉钉自定义机器人接口链接
-     * @var string
-     */
     protected $webhook = '';
 
     /**
@@ -65,7 +59,7 @@ class DingDing
      */
     public function setConfig(array $config = [])
     {
-        if (!empty($config['access_token'])) $this->webhook = $this->url . $config['access_token'];
+        if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
         return $this;
     }
 

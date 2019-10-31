@@ -44,7 +44,7 @@ class Index
         $ding = new DingDing();
         // 配置通知地址
         $ding->setConfig([
-            'access_token' => 'xxxxxxxxxxxxxxxxxxxx'
+            'webhook' => '通知地址'
         ]);
         // 发送文本消息
         $res = $ding->text('测试测试');
@@ -66,7 +66,7 @@ class Index
         $qywx = new QyWeixin();
         // 配置通知地址
         $qywx->setConfig([
-            'key' => 'xxx-xx-xx-xx-xxx'
+            'webhook' => '通知地址'
         ]);
         // 发送文本消息
         $res = $qywx->text('测试测试');
@@ -87,7 +87,7 @@ class Index
         $bc = new BearyChat();
         // 配置通知地址
         $bc->setConfig([
-            'key' => 'xxxxxxxxxxxxxxxxxxxx'
+            'webhook' => '通知地址'
         ]);
         // 发送文本消息
         $res = $bc->text('测试测试');
@@ -108,7 +108,7 @@ class Index
         $wt = new Worktile();
         // 配置通知地址
         $wt->setConfig([
-            'key' => 'xxxxxxxxxxxxxxxxxxxx'
+            'webhook' => '通知地址'
         ]);
         // 发送文本消息
         $res = $wt->text('10086',测试测试');

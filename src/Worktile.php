@@ -29,12 +29,6 @@ class Worktile
      * WorkTile自定义机器人接口链接
      * @var string
      */
-    protected $url = 'https://hook.worktile.com/custombot/';
-
-    /**
-     * WorkTile自定义机器人接口链接
-     * @var string
-     */
     protected $webhook = '';
 
     /**
@@ -50,7 +44,7 @@ class Worktile
      */
     public function setConfig(array $config = [])
     {
-        if (!empty($config['key'])) $this->webhook = $this->url . $config['key'];
+        if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
         return $this;
     }
 

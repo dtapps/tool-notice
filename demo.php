@@ -46,7 +46,7 @@ if (empty($res)) var_dump($wt->getError());
 
 // 倍洽
 $bc->setConfig([
-    'key' => 'xxxxxxxxxxxxxxxxxxxx'
+    'webhook' => '通知地址'
 ]);
 $res = $bc->text('测试测试');
 if (empty($res)) var_dump($bc->getError());
@@ -54,7 +54,7 @@ var_dump($res);
 
 // Worktile
 $wt->setConfig([
-    'key' => 'xxxxxxxxxxxxxxxxxxxx'
+    'webhook' => '通知地址'
 ]);
 $res = $wt->text(10086, '测试测试');
 if (empty($res)) var_dump($wt->getError());
@@ -62,7 +62,7 @@ var_dump($res);
 
 // 钉钉机器人
 $ding->setConfig([
-    'access_token' => 'xxxxxxxxxxxxxxxxxxxx'
+    'webhook' => '通知地址'
 ]);
 $res = $ding->text('测试测试');
 if (empty($res)) var_dump($ding->getError());
@@ -70,7 +70,7 @@ var_dump($res);
 
 // 企业微信机器人
 $qywx->setConfig([
-    'key' => 'xxx-xx-xx-xx-xxx'
+    'webhook' => '通知地址'
 ]);
 $res = $qywx->text('测试测试');
 if (empty($res)) var_dump($qywx->getError());

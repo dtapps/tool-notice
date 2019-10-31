@@ -29,12 +29,6 @@ class BearyChat
      * 倍洽自定义机器人接口链接
      * @var string
      */
-    protected $url = 'https://hook.bearychat.com/=bwH4n/incoming/';
-
-    /**
-     * 倍洽自定义机器人接口链接
-     * @var string
-     */
     protected $webhook = '';
 
     /**
@@ -50,7 +44,7 @@ class BearyChat
      */
     public function setConfig(array $config = [])
     {
-        if (!empty($config['key'])) $this->webhook = $this->url . $config['key'];
+        if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
         return $this;
     }
 

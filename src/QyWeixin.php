@@ -29,12 +29,6 @@ class QyWeixin
      * 企业微信自定义机器人接口链接
      * @var string
      */
-    protected $url = 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=';
-
-    /**
-     * 企业微信自定义机器人接口链接
-     * @var string
-     */
     protected $webhook = '';
 
     /**
@@ -65,7 +59,7 @@ class QyWeixin
      */
     public function setConfig(array $config = [])
     {
-        if (!empty($config['key'])) $this->webhook = $this->url . $config['key'];
+        if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
         return $this;
     }
 

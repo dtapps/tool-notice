@@ -12,7 +12,8 @@
   ],
   "homepage": "https://www.dtapp.net",
   "require": {
-    "php": ">=7.0"
+    "php": ">=7.0",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

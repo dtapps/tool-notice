@@ -23,20 +23,27 @@
 
 require_once './vendor/autoload.php';
 
-$qywx = new \liguangchun\notice\QyWeixin();
-$ding = new \liguangchun\notice\DingDing();
-$wt = new \liguangchun\notice\Worktile();
-$bc = new \liguangchun\notice\BearyChat();
-$sc = new \liguangchun\notice\SendCloud();
-
-// 邮箱推送
-$sc->setConfig([
+$qywx = new \Tool\Notice\QyWeixin([
+    'webhook' => '通知地址'
+]);
+$ding = new \Tool\Notice\DingDing([
+    'webhook' => '通知地址'
+]);
+$wt = new \Tool\Notice\Worktile([
+    'webhook' => '通知地址'
+]);
+$bc = new \Tool\Notice\BearyChat([
+    'webhook' => '通知地址'
+]);
+$sc = new \Tool\Notice\SendCloud([
     'api_user' => 'apiUser',
     'api_key' => 'apiKey',
     'from' => '发件人邮箱',
     'from_name' => '发件人名称',
     'notice' => '模板名称'
 ]);
+
+// 邮箱推送
 $res = $sc->send('邮箱地址', '邮箱标题', '邮箱描述', [
     "%name%" => ["name对应值"],
     "%content%" => ["content对应值"],
@@ -45,33 +52,21 @@ $res = $sc->send('邮箱地址', '邮箱标题', '邮箱描述', [
 if (empty($res)) var_dump($wt->getError());
 
 // 倍洽
-$bc->setConfig([
-    'webhook' => '通知地址'
-]);
 $res = $bc->text('测试测试');
 if (empty($res)) var_dump($bc->getError());
 var_dump($res);
 
 // Worktile
-$wt->setConfig([
-    'webhook' => '通知地址'
-]);
 $res = $wt->text(10086, '测试测试');
 if (empty($res)) var_dump($wt->getError());
 var_dump($res);
 
 // 钉钉机器人
-$ding->setConfig([
-    'webhook' => '通知地址'
-]);
 $res = $ding->text('测试测试');
 if (empty($res)) var_dump($ding->getError());
 var_dump($res);
 
 // 企业微信机器人
-$qywx->setConfig([
-    'webhook' => '通知地址'
-]);
 $res = $qywx->text('测试测试');
 if (empty($res)) var_dump($qywx->getError());
 var_dump($res);

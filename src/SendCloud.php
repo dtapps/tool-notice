@@ -1,36 +1,20 @@
 <?php
-/*
-                   _ooOoo_
-                  o8888888o
-                  88" . "88
-                  (| -_- |)
-                  O\  =  /O
-               ____/`---'\____
-             .'  \\|     |//  `.
-            /  \\|||  :  |||//  \
-           /  _||||| -:- |||||-  \
-           |   | \\\  -  /// |   |
-           | \_|  ''\---/''  |   |
-           \  .-\__  `-`  ___/-. /
-         ___`. .'  /--.--\  `. . __
-      ."" '<  `.___\_<|>_/___.'  >'"".
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-     \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-'======
-                   `=---='
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*/
+/**
+ * Created by : PhpStorm
+ * Date: 2019/11/6
+ * Time: 22:38
+ * User: 李光春 gc@dtapp.net
+ */
 
-namespace liguangchun\notice;
+namespace Tool\Notice;
 
-class SendCloud
+/**
+ * SendCloud
+ * Class SendCloud
+ * @package DtApp\Notice
+ */
+class SendCloud extends Base
 {
-    /**
-     * 邮箱
-     * @var string
-     */
-    protected $url = 'https://api.sendcloud.net/apiv2/mail/sendtemplate';
-
     /**
      * apiUser
      * @var string
@@ -69,17 +53,16 @@ class SendCloud
 
     /**
      * 设置配置
+     * SendCloud constructor.
      * @param array $config 配置信息数组
-     * @return $this
      */
-    public function setConfig(array $config = [])
+    public function __construct(array $config = [])
     {
         if (!empty($config['api_user'])) $this->api_user = $config['api_user'];
         if (!empty($config['api_key'])) $this->api_key = $config['api_key'];
         if (!empty($config['from'])) $this->from = $config['from'];
         if (!empty($config['from_name'])) $this->from_name = $config['from_name'];
         if (!empty($config['template'])) $this->template = $config['template'];
-        return $this;
     }
 
     /**
@@ -138,7 +121,7 @@ class SendCloud
                 'content' => $data
             ));
         $context = stream_context_create($options);
-        $result = file_get_contents($this->url, false, $context);
+        $result = file_get_contents($this->sendcloud_url, false, $context);
         return $result;
     }
 }

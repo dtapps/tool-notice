@@ -1,29 +1,19 @@
 <?php
-/*
-                   _ooOoo_
-                  o8888888o
-                  88" . "88
-                  (| -_- |)
-                  O\  =  /O
-               ____/`---'\____
-             .'  \\|     |//  `.
-            /  \\|||  :  |||//  \
-           /  _||||| -:- |||||-  \
-           |   | \\\  -  /// |   |
-           | \_|  ''\---/''  |   |
-           \  .-\__  `-`  ___/-. /
-         ___`. .'  /--.--\  `. . __
-      ."" '<  `.___\_<|>_/___.'  >'"".
-     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-     \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-'======
-                   `=---='
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-*/
+/**
+ * Created by : PhpStorm
+ * Date: 2019/11/6
+ * Time: 22:38
+ * User: 李光春 gc@dtapp.net
+ */
 
-namespace liguangchun\notice;
+namespace Tool\Notice;
 
-class Worktile
+/**
+ * WorkTile
+ * Class Worktile
+ * @package DtApp\Notice
+ */
+class Worktile extends Base
 {
     /**
      * WorkTile自定义机器人接口链接
@@ -39,13 +29,12 @@ class Worktile
 
     /**
      * 设置配置
+     * Worktile constructor.
      * @param array $config 配置信息数组
-     * @return $this
      */
-    public function setConfig(array $config = [])
+    public function __construct(array $config = [])
     {
         if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
-        return $this;
     }
 
     /**
@@ -69,7 +58,7 @@ class Worktile
      */
     public function sendMsg(array $data)
     {
-        $result = json_decode($this->request($data), true);
+        $result = json_decode($this->post_http($this->webhook, $data), true);
         if ($result['code'] == 200) return true;
         $this->error = $result['message'];
         return false;
@@ -82,28 +71,5 @@ class Worktile
     public function getError()
     {
         return $this->error;
-    }
-
-    /**
-     * 发送数据
-     * @param array $postData 发送消息数据数组
-     * @return bool|string
-     */
-    protected function request(array $postData)
-    {
-        $postStr = json_encode($postData);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->webhook);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json;charset=utf-8'));
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postStr);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // 线下环境不用开启curl证书验证, 未调通情况可尝试添加该代码
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $data = curl_exec($ch);
-        curl_close($ch);
-        return $data;
     }
 }

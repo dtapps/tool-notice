@@ -1,6 +1,6 @@
 {
-  "name": "liguangchun/notice",
-  "description": "Notice Plugin for PHP",
+  "name": "liguangchun/tool-notice",
+  "description": "第三方通知聚合",
   "type": "library",
   "license": "Apache-2.0",
   "authors": [
@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "liguangchun\\notice\\": "src"
+      "tool\\notice\\": "src"
     }
   }
 }

@@ -51,10 +51,9 @@ class Client
 
     /**
      * 配置
-     * Client constructor.
      * @param array $config
      */
-    public function __construct(array $config = [])
+    public function setConfig(array $config = [])
     {
         if (!empty($config['webhook'])) $this->webhook = $config['webhook'];
         if (!empty($config['api_user'])) $this->api_user = $config['api_user'];

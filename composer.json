@@ -1,6 +1,11 @@
 {
   "name": "liguangchun/tool-notice",
-  "description": "第三方通知聚合",
+  "description": "Tool Notice",
+  "keywords": [
+    "liguangchun",
+    "Tool",
+    "Notice"
+  ],
   "type": "library",
   "license": "Apache-2.0",
   "authors": [

@@ -1,4 +1,4 @@
-# composer-notice
+# tool-notice
 第三方通知聚合
 
 ## 安装
@@ -24,7 +24,7 @@ composer search liguangchun/tool-notice
 ## 支持平台
 - 钉钉
 - 企业微信
-- Worktile
+- WorkTile
 - 倍洽
 - 邮箱
 

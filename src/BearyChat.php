@@ -1,35 +1,27 @@
 <?php
 /**
- * Created by : PhpStorm
- * Date: 2019/11/6
- * Time: 22:38
- * User: 李光春 gc@dtapp.net
+ * 第三方通知聚合
+ * (c) Chaim <gc@dtapp.net>
  */
 
 namespace Tool\Notice;
 
 /**
  * 倍洽机器人
- * Class BearyChat
+ * Class BeAryChat
  * @package DtApp\Notice
  */
-class BearyChat extends Base
+class BeAryChat extends Base
 {
     /**
      * 倍洽自定义机器人接口链接
      * @var string
      */
-    protected $webhook = '';
-
-    /**
-     * 错误信息
-     * @var string
-     */
-    protected $error = '';
+    private $webhook = '';
 
     /**
      * 设置配置
-     * BearyChat constructor.
+     * BeAryChat constructor.
      * @param array $config 配置信息数组
      */
     public function __construct(array $config = [])
@@ -56,18 +48,8 @@ class BearyChat extends Base
      */
     public function sendMsg(array $data)
     {
-        $result = json_decode($this->post_http($this->webhook, $data), true);
+        $result = $this->postHttp($this->webhook, $data, true);
         if ($result['code'] !== 0) return true;
-        $this->error = $result['result'];
         return false;
-    }
-
-    /**
-     * 获取错误信息
-     * @return mixed
-     */
-    public function getError()
-    {
-        return $this->error;
     }
 }

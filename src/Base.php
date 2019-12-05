@@ -1,19 +1,17 @@
 <?php
 /**
- * Created by : PhpStorm
- * Date: 2019/11/6
- * Time: 22:40
- * User: 李光春 gc@dtapp.net
+ * 第三方通知聚合
+ * (c) Chaim <gc@dtapp.net>
  */
 
-namespace DtApp\Notice;
+namespace tool\Notice;
 
 /**
  * 通知中间
  * Class Base
  * @package DtApp\Notice
  */
-class Base
+class Base extends Client
 {
     /**
      * sendcloud网址
@@ -22,25 +20,34 @@ class Base
     protected $sendcloud_url = 'https://api.sendcloud.net/apiv2/mail/sendtemplate';
 
     /**
-     * 发送数据
+     * 发送Post请求
      * @param string $url 网址
-     * @param array $data
-     * @return bool|string
+     * @param array $data 参数
+     * @param string $headers
+     * @param bool $is_json 是否返回Json格式
+     * @return array|bool|mixed|string
      */
-    public function post_http(string $url, array $data = [])
+    protected function postHttp(string $url, array $data = [], bool $is_json = false, string $headers = 'application/json;charset=utf-8')
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: ' . $headers));
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 跳过证书检查
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);  // 从证书中检查SSL加密算法是否存在
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json;charset=utf-8'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // 线下环境不用开启curl证书验证, 未调通情况可尝试添加该代码
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-        $data = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_AUTOREFERER, true);
+        $content = curl_exec($ch);
         curl_close($ch);
-        return $data;
+        if (empty($is_json)) return $content;
+        try {
+            return json_decode($content, true);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
